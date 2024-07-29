@@ -2,7 +2,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { create } from "zustand";
 import { db } from "./firebase";
 
-// for state management to easily masnage user info
+// == for state management to easily manage user info
 export const useUserStore = create((set) => ({
   currentUser: null,
   isLoading: true,
