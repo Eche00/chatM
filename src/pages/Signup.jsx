@@ -145,16 +145,16 @@ function SignUp() {
                 src={avatar?.url || profile}
                 alt=""
               />
-              <h2 className="bg-gray-600 h-full px-2 rounded-md flex items-center">
+              <h2 className="h-full px-2 rounded-md flex items-center">
                 {avatar.url ? (
                   // text if image url is selected and valid
-                  <span className="text-xs font-bold flex items-center gap-[20px] text-white">
+                  <span className="text-xs font-bold flex items-center gap-[20px] text-white text-[16px]">
                     <ArrowBackIos fontSize="small" /> Image selected
                   </span>
                 ) : (
                   // text if image url is not selected
-                  <span className="text-xs font-bold flex items-center gap-[20px] text-white">
-                    <ArrowBackIos fontSize="small" /> Please select image before
+                  <span className="text-xs font-bold flex items-center gap-[20px] text-white text-[16px]">
+                    <ArrowBackIos fontSize="small" /> Please select an  image before
                     signing up
                   </span>
                 )}
@@ -205,7 +205,7 @@ function SignUp() {
                 <input
                   className="bg-transparent h-10 p-2 text-sm w-[100%] text-gray-300 outline-none"
                   name="bio"
-                  placeholder="About your business..."
+                  placeholder="About your business: A Normal Life is Boring"
                   required
                 />
               </div>
@@ -225,18 +225,18 @@ function SignUp() {
               </button>
 
 
-            {/* Link to sign-in page */}
-<p className="text-[16px] text-gray-400">
-  Have an account?{" "}
-  <span className="hover:text-blue-500 cursor-pointer text-gray-300">
-    <Link 
-      to={"/signin"} 
-      className="no-underline"
-    >
-      Sign In
-    </Link>
-  </span>
-</p>
+              {/* Link to sign-in page */}
+              <p className="text-[16px] text-gray-400">
+                Have an account?{" "}
+                <span className="hover:text-blue-500 cursor-pointer text-gray-300">
+                  <Link
+                    to={"/signin"}
+                    className="no-underline"
+                  >
+                    Sign In
+                  </Link>
+                </span>
+              </p>
 
 
             </div>
