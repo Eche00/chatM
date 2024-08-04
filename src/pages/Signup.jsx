@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  // Material UI icons
   ArrowBackIos,
   EmailOutlined,
   KeyOutlined,
@@ -18,21 +17,11 @@ import upload from "../lib/uploads";
 import { Spinner } from "flowbite-react";
 
 function SignUp() {
-  // State for loading indicator
   const [loading, setLoading] = useState(false);
-
-  // Navigation hook
-  const navigate = useNavigate();
-  // State for avatar upload
-  const [avatar, setAvatar] = useState({
-    file: null,
-    url: "",
-  });
-
-  // Reference to the file input for avatar upload
+  const [avatar, setAvatar] = useState({ file: null, url: "" });
   const profileRef = useRef(null);
+  const navigate = useNavigate();
 
-  // Handling avatar upload
   const handleAvatarUpload = (e) => {
     if (e.target.files[0]) {
       setAvatar({
@@ -42,24 +31,25 @@ function SignUp() {
     }
   };
 
-  // Handling form submission for user registration
   const handleRegistration = async (e) => {
     e.preventDefault();
-    // Show loading spinner
+    if (!avatar.file) {
+      toast.warning("Please select a profile image before signing up.");
+      return;
+    }
     setLoading(true);
 
-    // Getting form data
     const formData = new FormData(e.target);
     const { username, email, password, bio } = Object.fromEntries(formData);
 
     try {
-      // Creating user with email and password
+      // Create user with email and password
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
-      // Uploading avatar image to Firebase Storage
+      // Upload avatar image to Firebase Storage
       const imgUrl = await upload(avatar.file);
 
-      // Storing user credentials in Firestore
+      // Store user data in Firestore
       await setDoc(doc(db, "users", res.user.uid), {
         username,
         email,
@@ -69,53 +59,43 @@ function SignUp() {
         blocked: [],
       });
 
-      // Initializing user chats in Firestore
-      await setDoc(doc(db, "userchats", res.user.uid), {
-        chats: [],
-      });
+      // Initialize user chats in Firestore
+      await setDoc(doc(db, "userchats", res.user.uid), { chats: [] });
 
-      // Show success message
-      toast.success(username + " Account created");
-      // Redirect to sign-in page after successful registration
+      // Show success message and redirect
+      toast.success("Account created successfully");
       navigate("/signin");
     } catch (error) {
       // Show error message
-      toast.error(error.message);
+      toast.error(`Error: ${error.message}`);
     } finally {
-      // Hide loading spinner
       setLoading(false);
     }
   };
 
-  // Show warning if no avatar image is selected
   useEffect(() => {
-    if (!avatar?.url) {
-      toast.warning("Please select profile image before sign up");
+    if (!avatar.url) {
+      toast.warning("Please select a profile image before signing up.");
     }
-  }, []);
+  }, [avatar.url]);
 
   return (
     <div className="h-screen flex justify-center items-center bg-[#081b29]">
-      {/* Container for the entire sign-up page */}
-
       <div className="max-w-[100%] mx-auto">
         <h1 className="text-4xl font-serif text-center flex items-center justify-center p-2 text-gray-300 my-5">
           <QuestionAnswerTwoTone fontSize="100px" />
           chat<span className="font-bold">Me</span>
         </h1>
 
-
-        {/* Main section containing the form and image */}
         <section className="flex w-full justify-between p-5 sm:flex-row flex-col sm:border-solid border-none">
-
-          {/* Left side image section with animation */}
           <motion.section
             initial={{ rotate: 0 }}
             whileInView={{
               rotate: 1 % 2 === 0 ? [-1, 5.3, 0] : [1, -5.4, 0],
             }}
             transition={{ repeat: Infinity, duration: 3, delay: 2 }}
-            className="">
+            className=""
+          >
             <img
               className="h-[600px] hidden sm:inline-block"
               src={look}
@@ -123,13 +103,12 @@ function SignUp() {
             />
           </motion.section>
 
-          {/* Right side form section */}
           <form
             onSubmit={handleRegistration}
-            className="flex flex-col items-center justify-center">
+            className="flex flex-col items-center justify-center"
+          >
             <h2 className="text-gray-300 text-3xl font-serif py-10">Sign Up</h2>
 
-            {/* Profile image selection */}
             <div className="flex items-center justify-between w-full py-2">
               <input
                 type="file"
@@ -138,33 +117,27 @@ function SignUp() {
                 ref={profileRef}
                 onChange={handleAvatarUpload}
               />
-              {/* display image based on if selected */}
               <img
                 className="w-[70px] h-[70px] object-cover rounded-[50%] cursor-pointer border-2 border-gray-700"
                 onClick={() => profileRef.current.click()}
-                src={avatar?.url || profile}
+                src={avatar.url || profile}
                 alt=""
               />
               <h2 className="h-full px-2 rounded-md flex items-center">
                 {avatar.url ? (
-                  // text if image url is selected and valid
                   <span className="text-xs font-bold flex items-center gap-[20px] text-white text-[16px]">
                     <ArrowBackIos fontSize="small" /> Image selected
                   </span>
                 ) : (
-                  // text if image url is not selected
                   <span className="text-xs font-bold flex items-center gap-[20px] text-white text-[16px]">
-                    <ArrowBackIos fontSize="small" /> Please select an  image before
+                    <ArrowBackIos fontSize="small" /> Please select an image before
                     signing up
                   </span>
                 )}
               </h2>
             </div>
 
-            {/* Form fields for username, email, password, and bio */}
             <div className="flex flex-col sm:w-[500px] w-[300px] gap-5 justify-center items-center mt-5">
-
-              {/* Username field */}
               <div className="text-[#000] px-2 flex justify-center items-center bg-white rounded-md w-[100%]">
                 <AccountCircleIcon className="text-[#000]" />
                 <input
@@ -176,7 +149,6 @@ function SignUp() {
                 />
               </div>
 
-              {/* Email field */}
               <div className="text-[#000] px-2 flex justify-center items-center bg-white rounded-md w-[100%]">
                 <EmailOutlined />
                 <input
@@ -188,7 +160,6 @@ function SignUp() {
                 />
               </div>
 
-              {/* Password field */}
               <div className="text-[#000] px-2 flex justify-center items-center bg-white rounded-md w-[100%]">
                 <KeyOutlined />
                 <input
@@ -200,7 +171,6 @@ function SignUp() {
                 />
               </div>
 
-              {/* Bio field */}
               <div className="text-[#000] px-2 flex justify-center items-center bg-white rounded-md w-[100%]">
                 <input
                   className="bg-transparent h-10 p-2 text-sm w-[100%] text-gray-300 outline-none"
@@ -210,10 +180,10 @@ function SignUp() {
                 />
               </div>
 
-              {/* Sign up button */}
               <button
                 className="w-full p-3 px-12 rounded-md bg-blue-800 text-white text-sm font-bold hover:bg-opacity-90 disabled:cursor-not-allowed disabled:bg-blue-600 flex items-center justify-center"
-                disabled={loading}>
+                disabled={loading}
+              >
                 {loading ? (
                   <>
                     <Spinner className="w-[20px] h-[20px]" size="sm" />
@@ -224,8 +194,6 @@ function SignUp() {
                 )}
               </button>
 
-
-              {/* Link to sign-in page */}
               <p className="text-[16px] text-gray-400">
                 Have an account?{" "}
                 <span className="hover:text-blue-500 cursor-pointer text-gray-300">
@@ -237,13 +205,10 @@ function SignUp() {
                   </Link>
                 </span>
               </p>
-
-
             </div>
           </form>
         </section>
 
-        {/* Footer section */}
         <section className="flex flex-col justify-center items-center text-sm my-2">
           <p className="text-gray-400">Welcome to chatMe 👋</p>
           <div className="flex justify-center items-center gap-1 w-[100%] my-10">
@@ -254,7 +219,6 @@ function SignUp() {
               <img className="h-20" src={facebook} alt="" />
             </a>
 
-            {/* Google sign-up */}
             <img
               className="h-10"
               src={google}
