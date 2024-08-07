@@ -6,19 +6,19 @@ import { getStorage } from "firebase/storage";
 
 // == Firebase configuration from environment variables
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+  apiKey: "AIzaSyAPUFi7VJweQsbIM8-b6OTX4z3flrg8cnQ",
+  authDomain: "chatmei-7eacd.firebaseapp.com",
+  projectId: "chatmei-7eacd",
+  storageBucket: "chatmei-7eacd.appspot.com",
+  messagingSenderId: "733127386597",
+  appId: "1:733127386597:web:c3ef89ae491fec04afbb0c",
+  measurementId: "G-EV5M5SE5K4",
 };
 
 // == Initialize Firebase app
 const app = initializeApp(firebaseConfig);
 
 // == Export Firebase services for use in the app
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
+export const auth = getAuth();
+export const db = getFirestore();
+export const storage = getStorage();

@@ -20,6 +20,8 @@ function SignUp() {
   const [loading, setLoading] = useState(false);
   const [avatar, setAvatar] = useState({ file: null, url: "" });
   const profileRef = useRef(null);
+  const [dis, setDis] = useState(true);
+
   const navigate = useNavigate();
 
   const handleAvatarUpload = (e) => {
@@ -29,6 +31,7 @@ function SignUp() {
         url: URL.createObjectURL(e.target.files[0]),
       });
     }
+    setDis(false);
   };
 
   const handleRegistration = async (e) => {
@@ -94,8 +97,7 @@ function SignUp() {
               rotate: 1 % 2 === 0 ? [-1, 5.3, 0] : [1, -5.4, 0],
             }}
             transition={{ repeat: Infinity, duration: 3, delay: 2 }}
-            className=""
-          >
+            className="">
             <img
               className="h-[600px] hidden sm:inline-block"
               src={look}
@@ -105,8 +107,7 @@ function SignUp() {
 
           <form
             onSubmit={handleRegistration}
-            className="flex flex-col items-center justify-center"
-          >
+            className="flex flex-col items-center justify-center">
             <h2 className="text-gray-300 text-3xl font-serif py-10">Sign Up</h2>
 
             <div className="flex items-center justify-between w-full py-2">
@@ -130,8 +131,8 @@ function SignUp() {
                   </span>
                 ) : (
                   <span className="text-xs font-bold flex items-center gap-[20px] text-white text-[16px]">
-                    <ArrowBackIos fontSize="small" /> Please select an image before
-                    signing up
+                    <ArrowBackIos fontSize="small" /> Please select an image
+                    before signing up
                   </span>
                 )}
               </h2>
@@ -182,8 +183,7 @@ function SignUp() {
 
               <button
                 className="w-full p-3 px-12 rounded-md bg-blue-800 text-white text-sm font-bold hover:bg-opacity-90 disabled:cursor-not-allowed disabled:bg-blue-600 flex items-center justify-center"
-                disabled={loading}
-              >
+                disabled={loading || dis}>
                 {loading ? (
                   <>
                     <Spinner className="w-[20px] h-[20px]" size="sm" />
@@ -197,10 +197,7 @@ function SignUp() {
               <p className="text-[16px] text-gray-400">
                 Have an account?{" "}
                 <span className="hover:text-blue-500 cursor-pointer text-gray-300">
-                  <Link
-                    to={"/signin"}
-                    className="no-underline"
-                  >
+                  <Link to={"/signin"} className="no-underline">
                     Sign In
                   </Link>
                 </span>
@@ -219,11 +216,7 @@ function SignUp() {
               <img className="h-20" src={facebook} alt="" />
             </a>
 
-            <img
-              className="h-10"
-              src={google}
-              alt=""
-            />
+            <img className="h-10" src={google} alt="" />
           </div>
         </section>
       </div>
