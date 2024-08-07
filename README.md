@@ -21,3 +21,4 @@ Note that the APP so far has no mobile configuration and can only be used on Des
     * `/lib/userStore.js`: Manages user-related state with Zustand, including user details and authentication status.
 
 * `/components/Modal.jsx`: This file protects the system from mobile use as it is not currently compatible with mobile.
+# chatM
