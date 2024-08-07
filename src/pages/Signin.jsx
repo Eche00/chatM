@@ -14,21 +14,21 @@ import { Spinner } from "flowbite-react";
 
 function Signin() {
   // State to handle loading spinner
-  const [loading, setLoading] = useState(false); 
-   // Hook to programmatically navigate
+  const [loading, setLoading] = useState(false);
+  // Hook to programmatically navigate
   const navigate = useNavigate();
 
   // Function to handle form submission for signing in
   const handleSignin = async (e) => {
     // Prevent the default form submit behavior
-    e.preventDefault(); 
+    e.preventDefault();
     // Set loading state to true while processing
-    setLoading(true); 
+    setLoading(true);
 
     // Create FormData object from form submission
     const formData = new FormData(e.target);
     // Extract email and password from FormData
-    const { email, password } = Object.fromEntries(formData); 
+    const { email, password } = Object.fromEntries(formData);
 
     try {
       // Attempt to sign in with email and password using Firebase
@@ -44,7 +44,7 @@ function Signin() {
       toast.error(error.message);
     } finally {
       // Reset loading state
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -65,9 +65,8 @@ function Signin() {
             whileInView={{
               rotate: 1 % 2 === 0 ? [-1, 5.3, 0] : [1, -5.4, 0],
             }}
-            transition={{ repeat: Infinity, duration: 3, delay: 2 }}
-          >
-           <img
+            transition={{ repeat: Infinity, duration: 3, delay: 2 }}>
+            <img
               className="h-[600px] hidden sm:inline-block"
               src={look}
               alt="ChatMe UI"
@@ -81,7 +80,6 @@ function Signin() {
             <h2 className="text-gray-300 text-3xl font-serif">Sign In</h2>
 
             <div className="flex flex-col sm:w-[500px] w-[300px] gap-5 justify-center items-center mt-5">
-              
               {/* Email input field */}
               <div className="text-[#000] px-2 flex justify-center items-center bg-white rounded-md w-[100%]">
                 <EmailOutlined />
@@ -129,8 +127,6 @@ function Signin() {
                   </Link>
                 </span>
               </p>
-
-            
             </div>
           </form>
         </section>
@@ -138,24 +134,23 @@ function Signin() {
         {/* Footer section with welcome message and social media links */}
         <section className="flex flex-col justify-center items-center text-sm my-2">
           <p className="text-gray-400">Welcome to chatMe 👋</p>
-          
-          <div className="flex justify-center items-center gap-1 w-[100%] my-10">
 
+          <div className="flex justify-center items-center gap-1 w-[100%] my-10">
             {/* instagram authentication: empty */}
             <a href="">
-              <img className="h-20 bg-transparent" src={instagram} alt="Instagram" />
+              <img
+                className="h-20 bg-transparent"
+                src={instagram}
+                alt="Instagram"
+              />
             </a>
             {/* facebook authentication: empty */}
             <a href="">
               <img className="h-20" src={facebook} alt="Facebook" />
             </a>
 
-              {/* Google sign-in icon: empty */}
-              <img
-                className="h-10"
-                src={google}
-                alt="Google Sign In"
-              />
+            {/* Google sign-in icon: empty */}
+            <img className="h-10" src={google} alt="Google Sign In" />
           </div>
         </section>
       </div>
