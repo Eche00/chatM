@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import SignUp from "./pages/Signup";
-import Signin from "./pages/Signin";
-import Home from "./components/Home";
-import Notification from "./components/Notification/Notification";
-import Modal from "./components/Modal";
+import GetUser from "./get/GetUser";
+import GetAuth from "./get/GetAuth";
+import { useUserStore } from "./lib/userStore";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./lib/firebase";
 
 function App() {
-  // State to determine if the user is on a mobile device
   const [isMobile, setIsMobile] = useState(false);
+
+  // State to determine if the user is on a mobile device
+  const { currentUser, fetchUserInfo } = useUserStore();
 
   useEffect(() => {
     // Function to check if the window width is less than or equal to 768px
@@ -30,18 +31,9 @@ function App() {
 
   return (
     <div>
-      <Router>
-        {/* Define routes for different pages */}
-        <Routes>
-          <Route path="/" element={<SignUp />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/home" element={<Home />} />
-        </Routes>
-        {/* Display the notification component */}
-        <Notification />
-        {/* Display the modal only on mobile devices */}
-        {isMobile && <Modal />}
-      </Router>
+      {currentUser ? <GetUser /> : <GetAuth />}
+      {/* Display the modal only on mobile devices */}
+      {isMobile && <Modal />}
     </div>
   );
 }

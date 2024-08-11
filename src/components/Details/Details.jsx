@@ -20,6 +20,7 @@ import { db } from "../../lib/firebase";
 
 function Details() {
   const [chat, setChat] = useState();
+
   // getting chat info from chat store and current user from userstore
 
   const { chatId, user, isCurrentUserBlocked, isReceiverBlocked, changeBlock } =
@@ -68,9 +69,9 @@ function Details() {
         <p>{user?.email}</p>
         <p className="text-xl font-bold w-full">
           Bio: <br />
-          <p className=" text-[14px] text-gray-400  bg-gray-700 p-2 h-fit w-[100%] rounded-md my-1">
+          <span className=" text-[14px] text-gray-400  bg-gray-700 p-2 h-fit w-[100%] rounded-md my-1">
             {user?.bio}
-          </p>
+          </span>
         </p>
       </div>
 
@@ -89,7 +90,7 @@ function Details() {
               <span>Shared images</span>
               <ArrowCircleDownSharp />
             </div>
-            <div className=" flex  flex-wrap ">
+            <div className=" flex  flex-wrap " key={chatId}>
               {chat?.messages.map((image) => (
                 <>
                   {!image.img ? (

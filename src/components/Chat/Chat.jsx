@@ -43,7 +43,6 @@ function Chat() {
 
   const [loading, setLoading] = useState(false);
 
-  console.log(chat);
   const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } =
     useChatStore();
   const { currentUser } = useUserStore();

@@ -11,6 +11,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import { toast } from "react-toastify";
 import { Spinner } from "flowbite-react";
+import { useUserStore } from "../lib/userStore";
 
 function Signin() {
   // State to handle loading spinner
@@ -47,7 +48,9 @@ function Signin() {
       setLoading(false);
     }
   };
+  const { currentUser, isLoading, fetchUserInfo } = useUserStore();
 
+  console.log(currentUser);
   return (
     <div className="h-screen flex justify-center items-center bg-[#081b29]">
       {/* Main container for the sign-in page */}
